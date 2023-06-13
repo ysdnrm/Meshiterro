@@ -11,6 +11,26 @@
   </head>
 
   <body>
+    <header>
+      <!--⇩ ログインしている時としていない時で表示を分けることができる-->
+    <% if user_signed_in? %>
+    <!--ログインしてた場合の表示-->
+    
+    <!--ログアウトはHTTPメソッドがDELETEであることに注意!
+        link_toのHTTPメソッドは、特に設定しなければGETになります。-->
+      <li>
+        <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+      </li>
+    <% else %>
+    <!--ログインしてなかった場合の表示-->
+      <li>
+        <%= link_to "新規登録", new_user_registration_path %>
+      </li>
+      <li>
+        <%= link_to "ログイン", new_user_session_path %>
+      </li>
+    <% end %>
+  </header>  
     <%= yield %>
   </body>
 </html>
