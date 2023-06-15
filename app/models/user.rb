@@ -4,8 +4,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
          
-  #  ⇩アソシエーション ,   ⇩ユーザーIDを消したら投稿も消える
+  #  ⇩アソシエーション(User : PostImage = 1 : N ),   ⇩ユーザーIDを消したら投稿も消える
   has_many :post_images, dependent: :destroy
+  
+  #   ⇩アソシエーション(Use : PostComment = 1 : N )
+  has_many :post_comments, dependent: :destroy
   
  # プロフィール画像
   # profile_imageという名前でActiveStorageでプロフィール画像を保存できるように設定
