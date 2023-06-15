@@ -7,8 +7,11 @@ class PostImage < ApplicationRecord
     # PostImage モデルに関連付けられるのは、1 つの User モデル
     # このため、単数形の「user」になっている点に注意
     
-  # アソシエーション(PostImage : PostComment = 1 : N )
+  # アソシエーション(PostImage : PostComment = 1 : N )(PostCommentsは複数形)
   has_many :post_comments, dependent: :destroy
+  
+   # アソシエーション(PostImage : Favorites = 1 : N )(Favoritesは複数形)
+  has_many :favorites, dependent: :destroy
     
     # 画像が投稿されなかった時に代わりの画僧を表示させる
   def get_image
@@ -18,5 +21,8 @@ class PostImage < ApplicationRecord
     end  
     image
   end
-  
+  # 引数で渡されたユーザーが存在するか？
+  def favorited_by?(user)
+    favorites.exists?(user_id: user.id)
+  end
 end

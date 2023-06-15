@@ -12,11 +12,28 @@
   <% if @post_image.user == current_user %>
     <%= link_to "投稿削除", post_image_path(@post_image), method: :delete %>
   <% end %>
+  <!--いいね機能-->
+  　<!--favorited_by?　は引数で渡されたユーザidがFavoritesテーブル内に存在（exists?）するかどうかを調べます。-->
+  <% if @post_image.favorited_by?(current_user) %>
+    <p>
+      <!--いいねしてたら-->
+      <%= link_to post_image_favorites_path(@post_image), method: :delete do %>
+        ❤️<%= @post_image.favorites.count %> いいね
+      <% end %>
+    </p>
+    <!--いいねしてなかったら-->
+    <% else %>
+    <p>
+      <%= link_to post_image_favorites_path(@post_image), method: :post do %>
+        ♡<%= @post_image.favorites.count %> いいね
+      <% end %>
+    </p>
+  <% end %>
 </div>
 <!--コメント-->
 <div>
   <p>コメント件数：<%= @post_image.post_comments.count %></p>
-  <!--コメント者について-->
+  <!--コメントした人について-->
   <% @post_image.post_comments.each do |post_comment| %>
     <p><%= image_tag post_comment.user.get_profile_image(100,100) %></p>
     <%= post_comment.user.name %>
