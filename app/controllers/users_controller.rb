@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     
   # @user.post_imagesに格納されているデータは複数あるため,
   # 関連づけられているモデルのカラムを操作することはできません。
-    @post_images = @user.post_images
+    @post_images = @user.post_images.page(params[:page])
   end
 
   def edit
