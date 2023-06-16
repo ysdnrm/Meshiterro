@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  #ログイン認証が済んでいない状態でトップページ以外の画面にアクセスしても、ログイン画面へリダイレクトする
+  before_action :authenticate_user!, except: [:top]
 
   # deviseのコントローラは直接修正できないため、全てのコントローラに対する処理を行える権限を持つ、ApplicationControllerに
   # deviseのストロングパラメータを編集を記述する必要があります。

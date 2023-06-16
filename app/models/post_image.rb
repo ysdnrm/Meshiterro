@@ -1,5 +1,5 @@
 class PostImage < ApplicationRecord
-  
+  # ActiveStorage(画像の投稿、表示するためのもの)
   has_one_attached :image
 
   # アソシエーション(Postimage : User = N : 1 )（belongs_to = Userに属するということ）
@@ -10,8 +10,12 @@ class PostImage < ApplicationRecord
   # アソシエーション(PostImage : PostComment = 1 : N )(PostCommentsは複数形)
   has_many :post_comments, dependent: :destroy
   
-   # アソシエーション(PostImage : Favorites = 1 : N )(Favoritesは複数形)
+  # アソシエーション(PostImage : Favorites = 1 : N )(Favoritesは複数形)
   has_many :favorites, dependent: :destroy
+  
+  # バリデーションの実装(フォームの未入力のチェックを行い、エラーメッセージを表示)
+  validates :shop_name, presence: true
+   validates :image, presence: true
     
     # 画像が投稿されなかった時に代わりの画僧を表示させる
   def get_image
